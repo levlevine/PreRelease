@@ -388,12 +388,12 @@ public class Main {
       }
     }
     
-    void displayWinner(int playerOneScore, int playerTwoScore, String PlayerOneName, String PlayerTwoName)
+    void displayWinner(int playerOneScore, int playerTwoScore, String PlayerOneName, String PlayerTwoName) // Added playerone and playertwo to the function
     {
       Console.println();
       Console.println("**** GAME OVER! ****");
       Console.println();
-      Console.println(PlayerOneName +" your score is " + playerOneScore);
+      Console.println(PlayerOneName +" your score is " + playerOneScore); // Change from string to variable.
       Console.println(PlayerTwoName +"Player Two your score is " + playerTwoScore);
       if (playerOneScore > playerTwoScore)
       {
