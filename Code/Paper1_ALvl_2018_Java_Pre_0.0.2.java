@@ -388,20 +388,20 @@ public class Main {
       }
     }
     
-    void displayWinner(int playerOneScore, int playerTwoScore)
+    void displayWinner(int playerOneScore, int playerTwoScore, String PlayerOneName, String PlayerTwoName)
     {
       Console.println();
       Console.println("**** GAME OVER! ****");
       Console.println();
-      Console.println("Player One your score is " + playerOneScore);
-      Console.println("Player Two your score is " + playerTwoScore);
+      Console.println(PlayerOneName +" your score is " + playerOneScore);
+      Console.println(PlayerTwoName +"Player Two your score is " + playerTwoScore);
       if (playerOneScore > playerTwoScore)
       {
-        Console.println("Player One wins!");
+        Console.println(PlayerOneName+ "wins!");
       }
       else if (playerTwoScore > playerOneScore)
       {
-        Console.println("Player Two wins!");
+        Console.println( PlayerTwoName +"wins!");
       }
       else
       {
@@ -425,6 +425,13 @@ public class Main {
       Tiles playerOneTiles = new Tiles();
       Tiles playerTwoTiles = new Tiles();
       QueueOfTiles tileQueue  = new QueueOfTiles(20); 
+      String PlayerOneName = "";
+      String PlayerTwoName = "";
+      
+      Console.write("Player one, please enter your name");
+      PlayerOneName  = Console.readLine(); // Gets the nameof the players
+      Console.write("Player Two, please enter your name");
+      PlayerTwoName = Console.readLine();
       if(randomStart)
       {
         playerOneTiles.playerTiles = getStartingHand(tileQueue, startHandSize);
@@ -440,14 +447,14 @@ public class Main {
               playerOneTiles.playerTiles.length() < maxHandSize && 
               playerTwoTiles.playerTiles.length() < maxHandSize)
       {
-        haveTurn("Player One", playerOneTiles, playerOneTilesPlayed, playerOneScore, 
+        haveTurn(PlayerOneName, playerOneTiles, playerOneTilesPlayed, playerOneScore, 
                 tileDictionary, tileQueue, allowedWords, maxHandSize, 
                 noOfEndOfTurnTiles);
         Console.println();
         Console.println("Press Enter to continue");
         Console.readLine();
         Console.println();
-        haveTurn("Player Two", playerTwoTiles, playerTwoTilesPlayed, playerTwoScore, 
+        haveTurn(PlayerTwoName, playerTwoTiles, playerTwoTilesPlayed, playerTwoScore, 
                 tileDictionary, tileQueue, allowedWords, maxHandSize, 
                 noOfEndOfTurnTiles);
       }
@@ -455,7 +462,7 @@ public class Main {
               playerOneTiles.playerTiles, tileDictionary);
       playerTwoScore.score = updateScoreWithPenalty(playerTwoScore.score, 
               playerTwoTiles.playerTiles, tileDictionary);
-      displayWinner(playerOneScore.score, playerTwoScore.score);   
+      displayWinner(playerOneScore.score, playerTwoScore.score, PlayerOneName, PlayerTwoName);   
     }
 
     void displayMenu()
@@ -524,6 +531,9 @@ public class Main {
         {
           playGame(allowedWords, tileDictionary, false, 15, maxHandSize, 
                   maxTilesPlayed, noOfEndOfTurnTiles);
+        }
+        else {
+        	Console.println("pease enter a correct choice");
         }
       }
     }
