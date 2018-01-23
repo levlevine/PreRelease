@@ -63,12 +63,29 @@ public class Main {
         
         void add()
         {
+        	int number_of_vowels =0;
+        	int[] Vowels  = {0,4,8,14,20};
+        	
             Random rnd = new Random();
             if (rear < maxSize - 1) 
-            {
-                int randNo = rnd.nextInt(25);
-                rear += 1;
-                contents[rear] = (char)(65 + randNo);
+            	
+            { 
+            	if (rnd.nextInt(2) == 0){
+            		
+            		int randNo = rnd.nextInt(25);
+                    rear += 1;
+                    contents[rear] = (char)(65 + Vowels[rnd.nextInt(4)]);
+                    
+            	}
+            	
+            	else {
+            		int randNo = rnd.nextInt(25); // CODE THAT HAS BEEN CHANGED
+            		while (Arrays.asList(Vowels).contains(randNo)) {
+            			randNo = rnd.nextInt(25);
+            		}
+            		rear += 1;
+                    contents[rear] = (char)(65 + randNo);
+            	}
             }
         }
         
