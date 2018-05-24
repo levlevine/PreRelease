@@ -300,8 +300,12 @@ public class Main {
         }
         if (multiplyer > 0)
         {
-            playerScore.score += multiplyer*(getScoreForWord(word, tileDictionary));    
-            
+            playerScore.score += multiplyer*(getScoreForWord(word, tileDictionary)); 
+            Console.println(playerTiles.playerTiles);
+            playerTiles.playerTiles = playerTiles.playerTiles.replaceAll("£", "");
+            Console.println(playerTiles.playerTiles);
+            playerTiles.playerTiles = playerTiles.playerTiles.replaceAll("\\$", "");
+            Console.println(playerTiles.playerTiles);
         }
         else {
         playerScore.score += getScoreForWord(word, tileDictionary); 
