@@ -4,6 +4,7 @@
 * written by the AQA Programmer Team
 * developed using Netbeans IDE 8.1
 *
+* Version 1.2 released April 2018
 */
 
 package words.with.aqa;
@@ -13,10 +14,101 @@ import java.nio.charset.Charset;
 import java.nio.file.*;
 import java.util.*;
 
+import javax.swing.Spring;
+
 public class Main {
-    
+	 int scores_Array[] = new int[10]  ;
+	public void readHighscore(){
+		File file = new File("highscore.txt");
+		try {
+			BufferedReader bf = new BufferedReader(new FileReader(file));
+			int i = 0;
+			String v;
+			Console.println();
+			Console.println("HighScores:");
+			while ( ( v = bf.readLine()) != null ) {
+				scores_Array[i] = Integer.parseInt(v);
+				i = i +1;
+				Console.println(v);
+			}
+			bf.close();
+	    }
+	    catch (Exception e) {
+	    	try {
+		    	BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+		    	bw.write(""+0);
+		    	bw.close();
+	    	}
+	    	catch (Exception e2) {
+	    		Console.write("File error");
+	    	}
+    	}
+	}
+	public static int[] bubbleSort(int[] numArray) {
+
+	    int temp = 0;
+
+	    for (int i = 0; i < numArray.length; i++) {
+	        for (int j = 1; j < numArray.length; j++) {
+
+	            if (numArray[j] > numArray[j-1]) {
+	                temp = numArray[j];
+	                numArray[j] = numArray[j-1];
+	                numArray[j-1] = temp;
+	            }
+
+	        }
+	    }
+	    return numArray;
+	}
+	public void writeHighscore(int score) {
+		readHighscore();
+		int high_score = scores_Array[0];
+		File file = new File("highscore.txt");
+		int i = 0;
+		int[] tArray = new int[scores_Array.length+1];
+		for (i = 0; i < scores_Array.length; i++ ) {
+			tArray[i] = scores_Array[i];
+		}
+		tArray[tArray.length-1] = score;
+		Console.println(tArray[i]);
+		tArray = bubbleSort(tArray);
+		for (i = 0; i<scores_Array.length; i++) {
+			scores_Array[i] = tArray[i];
+		}
+		  //scores_Array[i]= score;
+		  String scores = "";
+		  for (int j =0; j<scores_Array.length; j++) {
+			  scores = scores + Integer.toString(scores_Array[j]) + "\n";
+		  }
+		  
+		  
+		if (high_score>score) {
+			Console.print("High score is" + score);
+			
+		}
+		else {
+			Console.print("Congrats you have the highest score!");
+		}
+		try {
+			BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+			
+			bw.write(scores);
+			Console.print(scores);
+			bw.close();
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+       
+	
+		
     class QueueOfTiles
     {
+    	
         protected char[] contents;
         protected int rear;
         protected int maxSize;
@@ -66,11 +158,13 @@ public class Main {
             Random rnd = new Random();
             if (rear < maxSize - 1) 
             {
-                int randNo = rnd.nextInt(25);
+                int randNo = rnd.nextInt(26);
                 rear += 1;
                 contents[rear] = (char)(65 + randNo);
             }
         }
+        
+        
         
         void show()
         {
@@ -284,7 +378,8 @@ public class Main {
         Console.println("     press 1 to display the letter values OR");
         Console.println("     press 4 to view the tile queue OR");
         Console.println("     press 7 to view your tiles again OR");
-        Console.println("     press 0 to fill hand and stop the game.");
+        Console.println("     press 0 to fill hand and stop the game OR");
+        Console.println("     press 3 to see high score");
         Console.print("> ");
         String choice = Console.readLine();
         Console.println();
@@ -346,6 +441,11 @@ public class Main {
           validChoice = true;
           fillHandWithTiles(tileQueue, playerTiles, maxHandSize);
         }
+        else if (choice.equals("3")) {
+        	readHighscore();
+        	int temp_highscore = scores_Array[0];
+        	Console.println("high score is" + temp_highscore);
+        }
         else
         {
           validChoice = true;
@@ -398,10 +498,17 @@ public class Main {
       if (playerOneScore > playerTwoScore)
       {
         Console.println("Player One wins!");
+		writeHighscore(playerOneScore);
+
+     
+        
       }
       else if (playerTwoScore > playerOneScore)
       {
         Console.println("Player Two wins!");
+		writeHighscore(playerTwoScore);
+
+
       }
       else
       {
@@ -467,6 +574,7 @@ public class Main {
       Console.println();
       Console.println("1. Play game with random start hand");
       Console.println("2. Play game with training start hand");
+      Console.println("3. Show high scores");
       Console.println("9. Quit");
       Console.println();
     }  
@@ -519,6 +627,12 @@ public class Main {
         {
           playGame(allowedWords, tileDictionary, true, startHandSize, 
                   maxHandSize, maxTilesPlayed, noOfEndOfTurnTiles);
+        }
+        if (choice.equals("3")){
+        	readHighscore();
+        	Console.write("current high score is " + scores_Array[0]);
+        	       
+        
         }
         else if (choice.equals("2"))
         {
